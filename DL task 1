@@ -1,0 +1,133 @@
+Create a random 4x4 array from an exponential distribution. Refer numpy functions.
+
+
+[1]
+0s
+import numpy as np
+
+[2]
+0s
+exponential_array = np.random.exponential(scale=1.0, size=(4, 4))
+
+[3]
+0s
+print("4x4 Exponential Distribution Array:")
+print(exponential_array)
+4x4 Exponential Distribution Array:
+[[0.91887352 0.15953551 0.17510566 2.51904697]
+ [0.90396062 0.44212154 1.16716675 0.18479245]
+ [0.9398476  0.52440965 0.71201346 0.30855773]
+ [2.32090619 0.25625516 0.36014328 0.93960952]]
+2)Create a random 100000x1 array from the same exponential distribution and visualize the distribution histogram along with uniform and normal distributions. Use the code given below and do the necessary changes. Change the number of bins and the plot view to make the visualization better. bold text
+
+Double-click (or enter) to edit
+
+
+[4]
+0s
+import matplotlib.pyplot as plt
+
+[5]
+0s
+exponential_data = np.random.exponential(scale=1.0, size=100000)
+uniform_data = np.random.rand(100000)  # Uniform [0, 1)
+normal_data = np.random.normal(loc=0.0, scale=1.0, size=100000) 
+
+[7]
+0s
+plt.hist(exponential_data, bins=100, density=True, histtype="step", label="Exponential", color="green")
+plt.hist(uniform_data, bins=100, density=True, histtype="step", label="Uniform", color="blue")
+plt.hist(normal_data, bins=100, density=True, histtype="step", label="Normal", color="red")
+
+
+
+[8]
+0s
+plt.title("Random Distributions: Exponential vs Uniform vs Normal")
+plt.xlabel("Value")
+plt.ylabel("Density")
+plt.axis([-2, 8, 0, 1])
+plt.legend(loc="upper right")
+plt.grid(True)
+plt.show()
+
+3)Using matplotlib, plot the Z = X2 + Y2 in a 3D plot. Limit the x and y values to [-5, 5]
+
+
+[9]
+0s
+from mpl_toolkits.mplot3d import Axes3D
+
+[10]
+0s
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = X**2 + Y**2
+
+[11]
+0s
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+
+[12]
+0s
+ax.plot_surface(X, Y, Z, cmap='viridis')
+<mpl_toolkits.mplot3d.art3d.Poly3DCollection at 0x78c4ae238890>
+
+[15]
+0s
+ax.set_title("3D Plot of Z = X² + Y²")
+ax.set_xlabel("X axis")
+ax.set_ylabel("Y axis")
+ax.set_zlabel("Z = X² + Y²")
+plt.show()
+4)Calculate the pearson standard coefficient and spearman rank correlation for the [HP, Attack, Defense, Sp. Ark, Sp. Def, Speed] features in the seaborn tutorial.ipynb. Visualize the results using heatmaps. Make sure the values are displaced in the heatmap as well.bold text
+
+
+[16]
+2s
+import seaborn as sns
+import pandas as pd
+from scipy.stats import spearmanr, pearsonr
+
+[18]
+0s
+df = sns.load_dataset('iris').dropna()
+
+[20]
+0s
+features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+data = df[features]
+
+[21]
+0s
+pearson_corr = data.corr(method='pearson')
+spearman_corr, _ = spearmanr(data)
+spearman_corr = pd.DataFrame(spearman_corr, index=features, columns=features)
+
+print("Pearson Correlation Matrix:")
+display(pearson_corr)
+
+print("\nSpearman Rank Correlation Matrix:")
+display(spearman_corr)
+
+Next steps:
+Gemini
+
+[22]
+2s
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+sns.heatmap(pearson_corr, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Pearson Correlation Coefficient")
+
+plt.subplot(1, 2, 2)
+sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Spearman Rank Correlation")
+
+plt.tight_layout()
+plt.show()
+
